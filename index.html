@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Frankie B Pinat">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Interactive Map</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+*{
+	margin: 0;
+	padding: 0;
+	font-family: 'Ubuntu', sans-serif;
+	text-decoration: none;
+	box-sizing: border-box;
+	list-style: none;
+}
+
+body{
+	background: #1E96C8;
+	color: #545454;
+	text-align: center;
+}
+
+.navbar{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 60px;
+	background: #303030;
+	padding: 0 25px;
+	z-index: 2;
+}
+
+.navbar .inner_navbar{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
+}
+
+.navbar .hamburger{
+	display: none;
+}
+
+.navbar .logo label{
+	font-weight: 700;
+	font-size: 24px;
+	letter-spacing: 3px;
+	color: #fff;
+}
+
+.navbar .logo label span{
+	color: #2BDBA8;
+}
+
+.navbar .menu ul{
+	display: flex;
+}
+
+.navbar .menu ul li span{
+	width: 120px;
+	margin-right: 10px;
+	display: block;
+	text-align: center;
+	padding: 10px;
+	border-radius: 25px;
+	color: #fff;
+	cursor: pointer;
+	text-transform: uppercase;
+	font-size: 14px;
+	letter-spacing: 2px;
+	transition: all 0.2s ease;
+}
+
+.navbar .menu ul li:last-child span{
+	margin-right: 0;	
+}
+
+.navbar .menu ul li span:hover,
+.navbar .menu ul li span.active{
+	background: #2BDBA8;
+}
+
+#filter {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: ;
+	z-index: 1;
+}
+
+#map {
+	position: relative;
+	top: 80px;
+	left: 0px;
+	width: 500px;
+}
+
+@media (max-width: 850px){
+	
+	.navbar{
+		height: 100px;
+		padding: 12px;
+	}
+	
+	.navbar .inner_navbar{
+		flex-direction: column;
+	}
+	
+	#map{
+		top: 120px;
+	}
+
+}
+
+@media (max-width: 600px){
+	
+	.navbar{
+		height: 60px;
+	}
+	
+	.navbar .inner_navbar{
+		flex-direction: row;
+	}
+	
+	.navbar .logo label{
+		margin-right: 50px;
+	}
+	
+	.navbar .menu{
+		position: fixed;
+		top: 0;
+		right: 0;
+		height: 100%;
+		display: block;
+	}
+	
+	.navbar .menu ul{
+		position: absolute;
+		top: 60px;
+		right: -250px;
+		display: block;
+		background: #202020;
+		width: 200px;
+		height: 100%;
+		transition: 0.5s;
+	}
+	
+	.navbar .menu ul.show{
+		right: 0;
+	}
+	
+	.navbar .menu ul li{
+		padding: 10px;
+	}
+	
+	.navbar .menu ul li span{
+		width: 100%;
+		padding: 12px;
+	}
+	
+	.navbar .hamburger{
+		display: block;
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		padding: 0 25px;
+		font-size: 25px;
+		line-height: 60px;
+		color: #fff;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+	
+	.navbar .hamburger:hover{
+		color: #2BDBA8;
+	}
+	
+	#map{
+		top: 80px;
+	}
+	
+}
+
+@media (max-width: 500px){
+	
+	#map{
+		width: 100%;
+	}
+	
+}
+
+</style>
+
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="navbar">
+				<div class="inner_navbar">
+					<div class="logo">
+						<label>PHILIPPINE <span>MAP</span></label>
+					</div>
+					<div class="menu">
+						<ul>
+							<li><span id="phil" class="active">Philippines</span></li>
+							<li><span id="lzn">luzon</span></li>
+							<li><span id="vsys">Visayas</span></li>
+							<li><span id="mndn">Mindanao</span></li>
+						</ul>
+					</div>
+				</div>
+				<div class="hamburger">
+					<i class="fa fa-bars"></i>
+				</div>
+			</div>
+			<div id="filter"></div>
+			<img id="map" src="Assets/Original.png" alt="philippine map">
+		</div>
+
+<script>
+
+var hamburger = document.querySelector(".hamburger");
+var ul = document.querySelector("ul");
+var philippines = document.getElementById("phil");
+var luzon = document.getElementById("lzn");
+var visayas = document.getElementById("vsys");
+var mindanao = document.getElementById("mndn");
+var filter = document.getElementById("filter");
+var map = document.getElementById("map");
+
+hamburger.addEventListener("click", function(){
+	ul.classList.toggle("show");
+})
+	
+philippines.addEventListener("click", function(){
+	ul.classList.toggle("show");
+	map.src="Assets/Pilipinas.png";
+})
+
+luzon.addEventListener("click", function(){
+	ul.classList.toggle("show");
+	map.src="Assets/Luzon.png";
+})
+
+visayas.addEventListener("click", function(){
+	ul.classList.toggle("show");
+	map.src="Assets/Visayas.png";
+})
+
+mindanao.addEventListener("click", function(){
+	ul.classList.toggle("show");
+	map.src="Assets/Mindanao.png";
+})
+
+filter.addEventListener("click", function(){
+	map.src="Assets/Original.png";
+})
+
+</script>
+
+	</body>
+</html>
+    
